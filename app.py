@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 import requests
 import os
 
+os.makedirs("models", exist_ok=True)
 # MediaFire direct download link (replace with your actual link)
 MEDIAFIRE_URL = "https://www.mediafire.com/file/boqwvnp8fgon05e/deepfake_model.h5/file"
 
