@@ -5,13 +5,42 @@ from flask import Flask, render_template_string, request, redirect, Response, ur
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from werkzeug.utils import secure_filename
+import requests
+import os
+
+# MediaFire direct download link (replace with your actual link)
+MEDIAFIRE_URL = "https://www.mediafire.com/file/boqwvnp8fgon05e/deepfake_model.h5/file"
+
+# Folder to store the model
+MODEL_PATH = "models/model.h5"
+
+# Function to download the model if it doesn't exist
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading model...")
+        response = requests.get(MEDIAFIRE_URL, stream=True)
+        if response.status_code == 200:
+            with open(MODEL_PATH, "wb") as f:
+                for chunk in response.iter_content(1024):
+                    f.write(chunk)
+            print("Model downloaded successfully.")
+        else:
+            print("Failed to download model.")
+    else:
+        print("Model already exists.")
+
+# Call the function before loading the model
+download_model()
+
+
 
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Load deepfake detection model
-model = load_model("C:/Users/Abd-Elrahman/Downloads/deepfake_model.h5")
+# Load the model in Flask
+from tensorflow.keras.models import load_model
+model = load_model(MODEL_PATH)
 
 # Configure upload settings
 UPLOAD_FOLDER = "static/uploads"
