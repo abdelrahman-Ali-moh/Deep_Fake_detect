@@ -1,0 +1,5 @@
+flask
+gunicorn
+numpy
+tensorflow  # (if needed for your .h5 model)
+pandas
