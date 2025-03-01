@@ -3,3 +3,4 @@ gunicorn
 numpy
 tensorflow  # (if needed for your .h5 model)
 pandas
+opencv-python-headless
